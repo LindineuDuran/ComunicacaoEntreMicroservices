@@ -1,0 +1,89 @@
+{
+	"info": {
+		"_postman_id": "5f86af69-356d-408f-ad00-87244cab2f7a",
+		"name": "Microservices Communication",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Registra Pagamento",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nroCartao\" : 123456,\r\n    \"codigoSegurancaCartao\" : 12,\r\n    \"valorCompra\" : 200\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8090/pagamento",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"pagamento"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Efetuar a compra da passagem - cartão inválido",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"codigoPassagem\":1,\r\n    \"nroCartao\":123,\r\n    \"codigoSegurancaCartao\":12,\r\n    \"valorPassagem\":500\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8086",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8086"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Efetuar a compra da passagem - cartão válido",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"codigoPassagem\":1,\r\n     \"nroCartao\" : 123456,\r\n    \"codigoSegurancaCartao\" : 12,\r\n    \"valorPassagem\":500\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8086",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8086"
+				}
+			},
+			"response": []
+		}
+	]
+}
