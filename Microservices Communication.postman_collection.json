@@ -84,6 +84,41 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Listar Pagamentos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verifica Status do Pagamento",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/92cd1e2e-9dc1-40db-834a-28a7e136682a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"92cd1e2e-9dc1-40db-834a-28a7e136682a"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
