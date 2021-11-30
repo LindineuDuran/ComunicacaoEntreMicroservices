@@ -119,6 +119,117 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Listar Pagamentos pelo Gateway",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8099/status/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8099",
+					"path": [
+						"status",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verificar Status do Pagamento pelo Gateway",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8099/status/2b15baa1-d500-45f5-a140-5c445884e844",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8099",
+					"path": [
+						"status",
+						"2b15baa1-d500-45f5-a140-5c445884e844"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Excluir Status do Pagamento pelo Gateway",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8099/status/2b15baa1-d500-45f5-a140-5c445884e844",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8099",
+					"path": [
+						"status",
+						"2b15baa1-d500-45f5-a140-5c445884e844"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Efetuar a compra da passagem pelo Gateway - cartão inválido",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"codigoPassagem\":1,\r\n    \"nroCartao\":123,\r\n    \"codigoSegurancaCartao\":12,\r\n    \"valorPassagem\":500\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8099",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8099"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Efetuar a compra da passagem pelo Gateway - cartão válido",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"codigoPassagem\":1,\r\n     \"nroCartao\" : 123456,\r\n    \"codigoSegurancaCartao\" : 12,\r\n    \"valorPassagem\":500\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8086",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8086"
+				}
+			},
+			"response": []
 		}
 	]
 }

@@ -40,6 +40,12 @@ public class CompraController
 		return compra.get();
 	}
 
+	@RequestMapping(path = "/{chave}", method = RequestMethod.DELETE)
+	public void excluir(@PathVariable("chave") String chave)
+	{
+		compraRedisRepository.deleteById(chave);
+	}
+
 	@RequestMapping(path = "/meunome", method = RequestMethod.GET)
 	public String status()
 	{
