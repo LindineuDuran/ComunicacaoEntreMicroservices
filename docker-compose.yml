@@ -1,0 +1,137 @@
+version: "3.8"
+
+services:
+  ms-communication-bank:
+    image: lduran355/ms-communication-bank:0.0.1-SNAPSHOT
+    container_name: bank
+    ports:
+      - "8090:8090"
+    restart: always
+    depends_on: # Start the depends_on first
+      - mysql
+    environment:
+      RDS_HOSTNAME: mysql
+      RDS_PORT: 3306
+      RDS_DB_NAME: banco
+      RDS_USERNAME: user123
+      RDS_PASSWORD: my-secret123
+    networks:
+      - msNET
+      
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: my-secret123
+      MYSQL_USER: user123
+      MYSQL_PASSWORD: my-secret123
+      MYSQL_DATABASE: banco
+    volumes: 
+      - dbdata:/var/lib/mysql
+    networks:
+      - msNET
+
+  ms-communication-buytrip:
+    image: lduran355/ms-communication-buytrip:0.0.1-SNAPSHOT
+    container_name: buytrip
+    ports:
+      - "8086:8086"
+    restart: always
+    depends_on: # Start the depends_on first
+      - rabbitmq
+      - consul
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbit666
+      RABBITMQ_DEFAULT_PASS: melhorsenhadomundo
+    networks:
+      - msNET
+
+  ms-communication-buyprocess:
+    image: lduran355/ms-communication-buyprocess:0.0.1-SNAPSHOT
+    container_name: buyprocess
+    ports:
+      - "8050:8050"
+    restart: always
+    depends_on: # Start the depends_on first
+      - rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbit666
+      RABBITMQ_DEFAULT_PASS: melhorsenhadomundo
+    networks:
+      - msNET
+
+  ms-communication-buyfeedback:
+    image: lduran355/ms-communication-buyfeedback:0.0.1-SNAPSHOT
+    container_name: buyfeedback
+    ports:
+      - "8082:8082"
+    restart: always
+    depends_on: # Start the depends_on first
+      - rabbitmq
+      - consul
+      - redis
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbit666
+      RABBITMQ_DEFAULT_PASS: melhorsenhadomundo
+    networks:
+      - msNET
+
+  ms-communication-gateway:
+    image: lduran355/ms-communication-gateway:0.0.1-SNAPSHOT
+    container_name: gateway
+    ports:
+      - "8099:8099"
+    restart: always
+    depends_on: # Start the depends_on first
+      - buytrip
+      - buyfeedback
+    networks:
+      - msNET
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    restart: always
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      RABBITMQ_DEFAULT_USER: rabbit666
+      RABBITMQ_DEFAULT_PASS: melhorsenhadomundo
+    networks:
+      - msNET
+
+  consul:
+    image: consul
+    container_name: consul
+    ports:
+      - 8600:53/tcp
+      - 8600:53/udp
+      - 8500:8500
+      - 8400:8400
+    restart: always
+    networks:
+      - msNET
+
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - 6379:6379
+    restart: always
+    networks:
+      - msNET
+
+# Volumes
+volumes: 
+  dbdata:
+  
+# Networks to be created to facilitate communication between containers
+networks:
+  msNET:
